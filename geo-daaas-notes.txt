@@ -1,0 +1,96 @@
+##### Installing GeoNetwork #####
+
+$ su - root
+$ yum update
+$ yum install epel-release
+
+Install Java OpenJDK version 8
+
+$ yum list *openjdk*
+$ yum install java-1.8.0-openjdk-devel.x86_64
+
+Install Tomcat
+https://linuxize.com/post/how-to-install-tomcat-9-on-centos-7/
+
+Create Tomcat user
+$ sudo useradd -m -U -d /opt/tomcat -s /bin/false tomcat
+
+Navigate to /tmp and download the Tomcat compressed file.
+$ cd /tmp
+$ wget https://archive.apache.org/dist/tomcat/tomcat-9/v9.0.27/bin/apache-tomcat-9.0.27.tar.gz
+
+Extract Tomcat.
+$ tar -xf apache-tomcat-9.0.27.tar.gz
+
+Move Tomcat source folder to /opt.
+$ mv apache-tomcat-9.0.27 /opt/tomcat
+
+Create a symbolic link called latest, that points to the Tomcat installation directory.
+$ ln -s /opt/tomcat/apache-tomcat-9.0.27 /opt/tomcat/latest
+
+Change the directory ownership to user and group tomcat.
+$ chown -R tomcat: /opt/tomcat
+
+Make the script executable.
+$ sh -c 'chmod +x /opt/tomcat/latest/bin/*.sh'
+
+Create a service file (tomcat.service).
+$ nano /etc/systemd/system/tomcat.service
+
+	[Unit]
+	Description=Tomcat 9 servlet container
+	After=network.target
+
+	[Service]
+	Type=forking
+
+	User=tomcat
+	Group=tomcat
+
+	Environment="JAVA_HOME=/usr/lib/jvm/jre"
+	Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
+
+	Environment="CATALINA_BASE=/opt/tomcat/latest"
+	Environment="CATALINA_HOME=/opt/tomcat/latest"
+	Environment="CATALINA_PID=/opt/tomcat/latest/temp/tomcat.pid"
+	Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
+
+	ExecStart=/opt/tomcat/latest/bin/startup.sh
+	ExecStop=/opt/tomcat/latest/bin/shutdown.sh
+
+	[Install]
+	WantedBy=multi-user.target
+
+Notify systemd that we created a new unit file.
+$ systemctl daemon-reload
+
+Enable and start Tomcat.
+$ systemctl enable tomcat
+$ systemctl start tomcat
+
+Download geonetwork.war
+$ wget -P /opt/tomcat/latest/webapps wget https://downloads.sourceforge.net/project/geonetwork/GeoNetwork_opensource/v3.10.3/geonetwork.war
+
+Fix Tomcat max .war file size
+https://stackoverflow.com/questions/39772669/after-add-maven-dependency-org-apache-catalina-filters-csrf-nonce-error-message
+$ nano /opt/tomcat/latest/webapps/manager/WEB-INF
+
+	<multipart-config>
+	    	<!– 50MB max –>
+		<max-file-size>92428800</max-file-size>
+		<max-request-size>92428800</max-request-size>
+    		<file-size-threshold>0</file-size-threshold>
+	</multipart-config>
+
+Fix Tomcat folder permissions
+https://github.com/geonetwork/core-geonetwork/issues/4344 
+$ nano /opt/tomcat/latest/webapps/geonetwork/WEB-INF/config-db/jdbc.properties
+
+	#jdbc.database=#{systemEnvironment['GEONETWORK_DB_NAME']?:'gn'}
+	jdbc.database=/opt/tomcat/latest/webapps/geonetwork
+
+
+
+
+
+
