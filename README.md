@@ -1,1 +1,2 @@
-# Geomatics Platform - Data Analytics as a Service
+# Data Analytics as a Service (DAaaS)
+## Geospatial Platform
