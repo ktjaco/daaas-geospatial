@@ -1,11 +1,11 @@
 #!/bin/sh
 
 # environment variables
-export DB_HOST=localhost
-export PORT=5432
-export DB_NAME=stc
-export USER=geoadm
-export PGPASSWORD=geoadm
+# export DB_HOST=localhost
+# export PORT=5432
+# export DB_NAME=stc
+# export USER=geoadm
+# export PGPASSWORD=geoadm
 
 # import STC boundary files into PostGIS
 for shp in `ls -1 ../data/*/*.shp`;	
