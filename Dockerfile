@@ -1,5 +1,19 @@
-FROM kartoza/geoserver
+FROM kartoza/geoserver:latest
 
-ADD . /daaas-geo
+ARG DB_HOST=
 
-WORKDIR /daaas-geo
+ARG PORT=
+
+ARG DB_NAME=
+
+ARG USER=
+
+ARG PGPASSWORD=
+
+ARG 
+
+USER root
+
+COPY . /daaas-geo
+
+WORKDIR /daaas-geo/scripts/

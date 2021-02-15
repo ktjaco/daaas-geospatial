@@ -228,3 +228,7 @@ $ sh import.sh
 
 ## Using Docker
 
+```sh
+$ docker build -t stc/geodaaas . --build-arg DB_HOST=<YOUR_PG_DB_HOST> --build-arg PORT=<YOUR_PG_PORT> --build-arg DB_NAME=<YOUR_PG_DB_NAME> --build-arg USER=<YOUR_PG_USER> --build-arg PGPASSWORD=<YOUR_PG_PASSWD>
+$ docker run -dp 8080:8080 stc/geodaaas
+```
