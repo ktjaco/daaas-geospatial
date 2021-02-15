@@ -1,4 +1,11 @@
-# Geospatial Platform Proof of Concept
+# Geospatial Platform Spatial Data Infrastructure - Proof of Concept
+
+- [Geospatial Platform Spatial Data Infrastructure - Proof of Concept](#geospatial-platform-spatial-data-infrastructure---proof-of-concept)
+  * [Before you begin...](#before-you-begin)
+    + [Prerequisites](#prerequisites)
+  * [Data Download](#data-download)
+  * [Data Import](#data-import)
+  * [Using Docker](#using-docker)
 
 Data Analytics as a Service (DAaaS) spatial data infrastructure Proof of Concept (PoC)  that utilizes PostgreSQL/PostGIS backed geospatial services using GeoServer.
 
@@ -218,4 +225,6 @@ Next, import the Esri Shapefiles in the data directory into the PostgreSQL/PostG
 ```sh
 $ sh import.sh
 ```
+
+## Using Docker
 
