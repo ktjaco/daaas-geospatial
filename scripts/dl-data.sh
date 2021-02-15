@@ -10,7 +10,9 @@ do
 done
 
 # unzip zip files
-for f in `ls -1 *.zip`; do unzip $f -d `basename $f .zip`; done
+for f in `ls -1 *.zip`;
+	do unzip $f -d `basename $f .zip`;
+done
 
 # remove zip files
 rm *.zip
