@@ -18,20 +18,21 @@ Data Analytics as a Service (DAaaS) spatial data infrastructure Proof of Concept
 * wget
 * unzip
 * tree (optional)
+* Docker (optional)
 
 Export the required environment variables to execute the shell scripts.
 
 ```sh
-$ export DB_HOST=<YOUR_HOST>
-$ export PORT=<YOUR_PG_PORT>
-$ export DB_NAME=<YOUR_DB_NAME>
-$ export USER=<YOUR_PG_USER_NAME>
-$ export PGPASSWORD=<YOUR_PG_PASSWD>
+$ export DB_HOST={YOUR_HOST}
+$ export PORT={YOUR_PG_PORT}
+$ export DB_NAME={YOUR_DB_NAME}
+$ export USER={YOUR_PG_USER_NAME}
+$ export PGPASSWORD={YOUR_PG_PASSWD}
 ```
 
 ## Data Download
 
-The data being used for this proof of concept uses the 2016 Statistics Canada Geography boundary files that can be found over the [internet](https://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm).
+The data being used for this proof of concept uses the [2016 Statistics Canada Geography Boundary Files](ttps://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm) and the [National Road Network](https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f).
 
 Navigate to the `scripts` directory.
 
@@ -78,144 +79,9 @@ data
 │   ├── lada000b16a_e.prj
 │   ├── lada000b16a_e.shp
 │   └── lada000b16a_e.shx
-├── lcar000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── agricultural_regions.html
-│   ├── lcar000b16a_e.dbf
-│   ├── lcar000b16a_e.prj
-│   ├── lcar000b16a_e.shp
-│   └── lcar000b16a_e.shx
-├── lccs000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── consolidated_census_subdivisions.html
-│   ├── lccs000b16a_e.dbf
-│   ├── lccs000b16a_e.prj
-│   ├── lccs000b16a_e.shp
-│   └── lccs000b16a_e.shx
-├── lcd_000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── census_division.html
-│   ├── lcd_000b16a_e.dbf
-│   ├── lcd_000b16a_e.prj
-│   ├── lcd_000b16a_e.shp
-│   └── lcd_000b16a_e.shx
-├── lcma000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── census_metropolitan_area.html
-│   ├── lcma000b16a_e.dbf
-│   ├── lcma000b16a_e.prj
-│   ├── lcma000b16a_e.shp
-│   └── lcma000b16a_e.shx
-├── lcsd000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── census_subdivision.html
-│   ├── lcsd000b16a_e.dbf
-│   ├── lcsd000b16a_e.prj
-│   ├── lcsd000b16a_e.shp
-│   └── lcsd000b16a_e.shx
-├── lct_000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── census_tract.html
-│   ├── lct_000b16a_e.dbf
-│   ├── lct_000b16a_e.prj
-│   ├── lct_000b16a_e.shp
-│   └── lct_000b16a_e.shx
-├── lda_000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── dissemination_area.html
-│   ├── lda_000b16a_e.dbf
-│   ├── lda_000b16a_e.prj
-│   ├── lda_000b16a_e.shp
-│   └── lda_000b16a_e.shx
-├── ldb_000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── dissemination_blocks.html
-│   ├── ldb_000b16a_e.dbf
-│   ├── ldb_000b16a_e.prj
-│   ├── ldb_000b16a_e.shp
-│   └── ldb_000b16a_e.shx
-├── ldpl000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── designated_place.html
-│   ├── ldpl000b16a_e.dbf
-│   ├── ldpl000b16a_e.prj
-│   ├── ldpl000b16a_e.shp
-│   └── ldpl000b16a_e.shx
-├── lecu000e16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── lcd_000e16a_e.dbf
-│   ├── lcd_000e16a_e.prj
-│   ├── lcd_000e16a_e.shp
-│   ├── lcd_000e16a_e.shx
-│   ├── lecu000e16a_e.dbf
-│   ├── lecu000e16a_e.prj
-│   ├── lecu000e16a_e.shp
-│   ├── lecu000e16a_e.shx
-│   ├── lhy_000e16a_e.dbf
-│   ├── lhy_000e16a_e.prj
-│   ├── lhy_000e16a_e.shp
-│   ├── lhy_000e16a_e.shx
-│   ├── lpr_000e16a_e.dbf
-│   ├── lpr_000e16a_e.prj
-│   ├── lpr_000e16a_e.shp
-│   ├── lpr_000e16a_e.shx
-│   └── population_ecumene.html
-├── ler_000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── economic_region.html
-│   ├── ler_000b16a_e.dbf
-│   ├── ler_000b16a_e.prj
-│   ├── ler_000b16a_e.shp
-│   └── ler_000b16a_e.shx
-├── lfed000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── federal_electoral_district.html
-│   ├── lfed000b16a_e.dbf
-│   ├── lfed000b16a_e.prj
-│   ├── lfed000b16a_e.shp
-│   └── lfed000b16a_e.shx
-├── lfsa000b16a_e
-│   ├── 92-179-g2016001-eng.pdf
-│   ├── forward_sortation_area.html
-│   ├── lfsa000b16a_e.dbf
-│   ├── lfsa000b16a_e.prj
-│   ├── lfsa000b16a_e.shp
-│   └── lfsa000b16a_e.shx
-├── lhy_000c16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── lakes_rivers_poly.html
-│   ├── lhy_000c16a_e.dbf
-│   ├── lhy_000c16a_e.prj
-│   ├── lhy_000c16a_e.shp
-│   └── lhy_000c16a_e.shx
-├── lhy_000d16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── lhy_000d16a_e.dbf
-│   ├── lhy_000d16a_e.prj
-│   ├── lhy_000d16a_e.shp
-│   ├── lhy_000d16a_e.shx
-│   └── rivers_lines.html
-├── lhy_000h16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── coastal_waters.html
-│   ├── lhy_000h16a_e.dbf
-│   ├── lhy_000h16a_e.prj
-│   ├── lhy_000h16a_e.shp
-│   └── lhy_000h16a_e.shx
-├── lpc_000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── lpc_000b16a_e.dbf
-│   ├── lpc_000b16a_e.prj
-│   ├── lpc_000b16a_e.shp
-│   ├── lpc_000b16a_e.shx
-│   └── population_center.html
-└── lpr_000b16a_e
-    ├── 92-160-g2016002-eng.pdf
-    ├── lpr_000b16a_e.dbf
-    ├── lpr_000b16a_e.prj
-    ├── lpr_000b16a_e.shp
-    ├── lpr_000b16a_e.shx
-    └── province_territory.html
+.........
+.........
+.........
 ```
 
 ## Data Import
@@ -228,7 +94,22 @@ $ sh import.sh
 
 ## Using Docker
 
+If you would like to download and import the datasets using a Docker image, execute the following commands.
+
+Build the Docker image.
 ```sh
-$ docker build -t stc/geodaaas . --build-arg DB_HOST=<YOUR_PG_DB_HOST> --build-arg PORT=<YOUR_PG_PORT> --build-arg DB_NAME=<YOUR_PG_DB_NAME> --build-arg USER=<YOUR_PG_USER> --build-arg PGPASSWORD=<YOUR_PG_PASSWD>
+$ docker build -t stc/geodaaas -f dockerfiles/Dockerfile-Import --build-arg DB_HOST={YOUR_PG_DB_HOST} --build-arg PORT={YOUR_PG_PORT} --build-arg DB_NAME={YOUR_PG_DB_NAME} --build-arg USER={YOUR_PG_USER} --build-arg PGPASSWORD={YOUR_PG_PASSWORD}
+```
+
+Run the Docker container.
+```sh
 $ docker run -dp 8080:8080 stc/geodaaas
 ```
+
+GeoServer should now be running at `http://{YOUR_HOST}:8080/geoserver/web`.
+
+To enter the Docker container if necessary.
+```sh
+$ docker exec -it {NAME} /bin/bash
+```
+
