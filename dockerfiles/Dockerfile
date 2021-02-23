@@ -2,10 +2,6 @@ FROM kartoza/geoserver:2.18.0
 
 USER root
 
-COPY . /daaas-geo
-
-WORKDIR /daaas-geo
-
 RUN wget -P /usr/local/tomcat/webapps/geoserver/WEB-INF/lib \ 
     https://sourceforge.net/projects/geoserver/files/GeoServer/2.18.0/extensions/geoserver-2.18.0-wps-plugin.zip
 
