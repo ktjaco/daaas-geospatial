@@ -1,8 +1,6 @@
-FROM kartoza/geoserver:2.18.2
+FROM kartoza/geoserver:2.18.0
 
 USER root
-
-#COPY . /daaas-geo
 
 WORKDIR /tmp
 
@@ -20,4 +18,3 @@ RUN unzip -o /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/geoserver-2.18.2-wp
 RUN unzip -o /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/geoserver-2.18.2-csw-plugin.zip
 
 RUN unzip -o /usr/local/tomcat/webapps/geoserver/WEB-INF/lib/geoserver-2.18.2-vectortiles-plugin.zip
-
