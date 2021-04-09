@@ -1,0 +1,11 @@
+FROM osgeo/gdal:ubuntu-small-latest
+
+WORKDIR /cog
+
+RUN pip install landsatxplore
+
+RUN export LANDSATXPLORE_USERNAME=ktjaco
+
+RUN export LANDSATXPLORE_PASSWORD=COGtesting2021
+
+RUN landsatxplore search --dataset LANDSAT_TM_C1 --location 45.3586 -75.5951 --start 2020-01-01 --end 2020-12-31
