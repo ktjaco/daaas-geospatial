@@ -33,6 +33,8 @@ WORKDIR /cog/data/S2A_MSIL1C_20200104T160641_N0208_R097_T18TVR_20200104T192150.S
 
 RUN chmod u+x /cog/scripts/geotiff.sh && /cog/scripts/geotiff.sh
 
+RUN chmod u+x /cog/scripts/reproject.sh && /cog/scripts/reproject.sh
+
 RUN chmod u+x /cog/scripts/cog.sh && /cog/scripts/cog.sh
 
 RUN chmod u+x /cog/scripts/validate-cog.sh && /cog/scripts/validate-cog.sh
