@@ -1,0 +1,12 @@
+[Unit] 
+Description=GeoServer container 
+Requires=docker.service 
+After=docker.service 
+
+[Service] 
+Restart=always 
+ExecStart=/usr/bin/docker start -a geoserver_dev 
+ExecStop=/usr/bin/docker stop -t 2 geoserver_dev 
+
+[Install]
+WantedBy=default.target

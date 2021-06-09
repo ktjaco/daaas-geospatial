@@ -5,7 +5,7 @@
     + [Prerequisites](#prerequisites)
   * [Data Download](#data-download)
   * [Data Import](#data-import)
-  * [Using Docker](#using-docker)
+  * [Build GeoServer](#build-geoserver)
 
 Data Analytics as a Service (DAaaS) spatial data infrastructure Proof of Concept (PoC)  that utilizes PostgreSQL/PostGIS backed geospatial services using GeoServer.
 
@@ -92,18 +92,16 @@ Next, import the Esri Shapefiles in the data directory into the PostgreSQL/PostG
 $ sh import.sh
 ```
 
-## Using Docker
-
-If you would like to download and import the datasets using a Docker image, execute the following commands.
+## Build GeoServer
 
 Build the Docker image.
 ```sh
-$ docker build -t stc/geodaaas -f dockerfiles/Dockerfile-Import --build-arg DB_HOST={YOUR_PG_DB_HOST} --build-arg PORT={YOUR_PG_PORT} --build-arg DB_NAME={YOUR_PG_DB_NAME} --build-arg USER={YOUR_PG_USER} --build-arg PGPASSWORD={YOUR_PG_PASSWORD}
+$ docker build -t stc/daaas-geoserver .
 ```
 
 Run the Docker container.
 ```sh
-$ docker run -dp 8080:8080 stc/geodaaas
+$ docker --name=daaas_geoserver run -dtp 8080:8080 stc/daaas-geoserver
 ```
 
 GeoServer should now be running at `http://{YOUR_HOST}:8080/geoserver/web`.
@@ -111,5 +109,35 @@ GeoServer should now be running at `http://{YOUR_HOST}:8080/geoserver/web`.
 To enter the Docker container if necessary.
 ```sh
 $ docker exec -it {NAME} /bin/bash
+```
+
+Create GeoServer `systemd .service` file.
+```sh
+$ sudo nano /etc/systemd/system/daaas_geoserver.service
+```
+
+```
+[Unit] 
+Description=GeoServer container 
+Requires=docker.service 
+After=docker.service 
+
+[Service] 
+Restart=always 
+ExecStart=/usr/bin/docker start -a daaas_geoserver
+ExecStop=/usr/bin/docker stop -t 2 daaas_geoserver
+
+[Install]
+WantedBy=default.target
+```
+
+Enable the GeoServer service file.
+```sh
+$ sudo systemctl enable daaas_geoserver.service
+```
+
+Restart, stop, or start the GeoServer instance, or check the status.
+```sh
+$ sudo systemctl [restart | start | stop | status] daaas_geoserver.service
 ```
 
