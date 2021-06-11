@@ -5,8 +5,8 @@ After=docker.service
 
 [Service] 
 Restart=always 
-ExecStart=/usr/bin/docker start -a geoserver_dev 
-ExecStop=/usr/bin/docker stop -t 2 geoserver_dev 
+ExecStart=/usr/bin/docker start -a daaas_geoserver 
+ExecStop=/usr/bin/docker stop -t 2 daaas_geoserver 
 
 [Install]
 WantedBy=default.target
