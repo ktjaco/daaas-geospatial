@@ -14,12 +14,6 @@ handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s: %(message)s", "%Y-%m-%d %H:%M:%S"))
 logger.addHandler(handler)
 
-# Required proxy on Net B VDI for downloading imagery.
-proxy = {
-    'http':'http://' + str(sys.argv[1]) + ':' + str(sys.argv[2]) + '@stcweb.statcan.ca:80',
-    'https' : 'https://' + str(sys.argv[1]) + ':' + str(sys.argv[2]) + '@stcweb.statcan.ca:80'
-}
-
 # Yesterday's date.
 yesterday = datetime.now() - timedelta(1)
 
@@ -42,7 +36,7 @@ base_url = "https://data.eodms-sgdot.nrcan-rncan.gc.ca"
 url = base_url + "/public/avhrr/TBUS/" + year + "/"
 
 # Using the URL, request the AVHRR NRCan page.
-r = requests.get(url, proxies=proxy)
+r = requests.get(url)
 
 # Scrap the HTML page so it can be used to extract the file names.
 data = bs4.BeautifulSoup(r.text, "html.parser")
@@ -54,7 +48,7 @@ for l in data.find_all("a"):
     # Empty list to store the TBUS file names.
     list = []
     # Using the URL, request the AVHRR NRCan page with the file names (HREF).
-    r = requests.get(base_url + l["href"], proxies=proxy)
+    r = requests.get(base_url + l["href"])
     # Append the file name to the empty list.
     list.append(l["href"].split("/")[-1])
     # Filter the file name given yesterday's date.

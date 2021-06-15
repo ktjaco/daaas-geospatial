@@ -12,12 +12,6 @@ handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s: %(message)s", "%Y-%m-%d %H:%M:%S"))
 logger.addHandler(handler)
 
-# Required proxy on Net B VDI for downloading imagery.
-proxy = {
-    'http':'http://' + str(sys.argv[1]) + ':' + str(sys.argv[2]) + '@stcweb.statcan.ca:80',
-    'https' : 'https://' + str(sys.argv[1]) + ':' + str(sys.argv[2]) + '@stcweb.statcan.ca:80'
-}
-
 # File name for the NOAA download.
 eodm_noaa = "C:\\EODM\\EODMSoft\\NORAD\\noaa-19.txt"
 
@@ -25,7 +19,7 @@ eodm_noaa = "C:\\EODM\\EODMSoft\\NORAD\\noaa-19.txt"
 url = "http://www.celestrak.com/norad/elements/noaa.txt"
 
 # Request sent to NOAA page for text file.
-r = requests.get(url, proxies=proxy)
+r = requests.get(url)
 
 # Open the NOAA text file and write it to the directory.
 noaa = open('noaa.txt', 'wb').write(r.content)

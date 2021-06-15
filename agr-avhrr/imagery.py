@@ -14,12 +14,6 @@ handler.setLevel(logging.INFO)
 handler.setFormatter(logging.Formatter("%(asctime)s - %(levelname)s: %(message)s", "%Y-%m-%d %H:%M:%S"))
 logger.addHandler(handler)
 
-# Required proxy on Net B VDI for downloading imagery.
-proxy = {
-    'http':'http://' + str(sys.argv[1]) + ':' + str(sys.argv[2]) + '@stcweb.statcan.ca:80',
-    'https' : 'https://' + str(sys.argv[1]) + ':' + str(sys.argv[2]) + '@stcweb.statcan.ca:80'
-}
-
 # Set directory where raw imagery will be downloaded.
 raw_dir = 'C:\\EODM\\raw\\'
 
@@ -42,7 +36,7 @@ base_url = "https://data.eodms-sgdot.nrcan-rncan.gc.ca"
 url = base_url + "/public/avhrr/l1b/" + year + "/20" + yesterday_jul + "/noaa19/"
 
 # Using the URL, request the AVHRR NRCan page.
-r = requests.get(url, proxies=proxy)
+r = requests.get(url)
 
 # Scrap the HTML page so it can be used to extract the file names.
 data = bs4.BeautifulSoup(r.text, "html.parser")
@@ -52,7 +46,7 @@ for l in data.find_all("a"):
     # Change raw directory folder.
     os.chdir(raw_dir)
     # Using the URL, request the AVHRR NRCan page with the file names (HREF).
-    r = requests.get(base_url + l["href"], proxies=proxy)
+    r = requests.get(base_url + l["href"])
     # Open the file and split it at the last "/".
     file = open(l["href"].split("/")[-1], 'wb')
     # Log the file that is being downloaded.
