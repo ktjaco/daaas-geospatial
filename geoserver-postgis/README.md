@@ -96,12 +96,15 @@ $ sh import.sh
 
 Build the Docker image.
 ```sh
+$ git clone https://github.com/kartoza/docker-geoserver
+$ cd docker-geoserver
+$ git checkout 2.19.0
 $ docker build -t stc/daaas-geoserver .
 ```
 
 Run the Docker container.
 ```sh
-$ docker --name=daaas_geoserver run -dtp 8080:8080 stc/daaas-geoserver
+$ docker run --name=daaas_geoserver -dtp 8080:8080 stc/daaas-geoserver
 ```
 
 GeoServer should now be running at `http://{YOUR_HOST}:8080/geoserver/web`.
