@@ -1,10 +1,12 @@
 #!/bin/sh
 
+source ../credentials.sh
+
 # move to data directory
-cd ../data
+cd $DATA_DIR
 
 # download STC Geography boundary files
-cat ../scripts/link.txt | while read line 
+cat $LINK | while read line 
 do
    wget --no-check-certificate $line
 done
