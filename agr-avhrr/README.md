@@ -1,1 +1,0 @@
-# AgZero AVHRR Processing
