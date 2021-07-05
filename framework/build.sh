@@ -64,6 +64,11 @@ if [[ ${STEP} = "create_database" ]]; then
     bash scripts/create-database.sh
 fi
 
+# Drop the sdi, natearth and nrn databases.
+if [[ ${STEP} = "drop_database" ]]; then
+    bash scripts/drop-database.sh
+fi
+
 # Enable the PostGIS extension in the databases.
 if [[ ${STEP} = "enable_postgis" ]]; then
     bash scripts/enable-postgis.sh
