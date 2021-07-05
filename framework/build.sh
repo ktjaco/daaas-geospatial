@@ -11,7 +11,9 @@ if [[ $# -eq 0 ]]; then
     echo "- build_elasticsearch"
     echo "- build_geonetwork"
     echo "- download_data"
-    echo ""
+    echo "- create_database"
+    echo "- enable_postgis"
+    echo "- "
     exit 0
 fi
 
@@ -54,11 +56,20 @@ fi
 
 # Download the geospatial datasets.
 if [[ ${STEP} = "download_data" ]]; then
-    cd $DATA_DIR
-    bash scripts/dl-data.sh
+    bash scripts/download-data.sh
 fi
 
 # Create the sdi, natearth and nrn databases.
 if [[ ${STEP} = "create_database" ]]; then
-    bash scripts/create-db.sh
+    bash scripts/create-database.sh
+fi
+
+# Enable the PostGIS extension in the databases.
+if [[ ${STEP} = "enable_postgis" ]]; then
+    bash scripts/enable-postgis.sh
+fi
+
+# Import the datasets into the PostGIS database.
+if [[ ${STEP} = "import_data" ]]; then
+    bash scripts/import-data.sh
 fi
