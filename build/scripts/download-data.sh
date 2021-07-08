@@ -4,16 +4,16 @@ source credentials.sh
 
 cd $DATA_DIR
 
-# download STC Geography boundary files
-cat ../framework/link.txt | while read line 
+# Download geospatial datasets from the link.txt file.
+cat $LINKS | while read line 
 do
    wget --no-check-certificate $line
 done
 
-# unzip zip files
+# Unzip the .zip files.
 for f in `ls -1 *.zip`;
-	do unzip $f -d `basename $f .zip`;
+do unzip $f -d `basename $f .zip`;
 done
 
-# remove zip files
+# Remove zip files.
 rm *.zip
