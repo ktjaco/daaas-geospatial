@@ -1,7 +1,9 @@
 #!/bin/bash
 
+# Environment variables.
 source credentials.sh
 
+# Change the directory to the data directory.
 cd $DATA_DIR
 
 # Download geospatial datasets from the link.txt file.
