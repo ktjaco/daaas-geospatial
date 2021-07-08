@@ -84,7 +84,7 @@ $ cp credentials.sh.template credentials.sh
 
 Build the GeoServer instance. This GeoServer Dockerfile was forked from [Kartoza](https://github.com/kartoza/docker-geoserver).
 ```bash
-$ sudo chmod +x ./build.sh
+$ sudo chmod +x ./main.sh
 $ ./main.sh build_geoserver
 ```
 
