@@ -1,146 +1,149 @@
-# Geospatial Platform Spatial Data Infrastructure - Proof of Concept
+# FOSS Geospatial Platform Infrastructure
 
-- [Geospatial Platform Spatial Data Infrastructure - Proof of Concept](#geospatial-platform-spatial-data-infrastructure---proof-of-concept)
-  * [Before you begin...](#before-you-begin)
-    + [Prerequisites](#prerequisites)
-  * [Data Download](#data-download)
-  * [Data Import](#data-import)
-  * [Build GeoServer](#build-geoserver)
+The following scripts were tested on an Azure Standard D2s v3 (2 vcpus, 8 GiB memory) instance with Ubuntu LTS 20.04 and RHEL 8. It is also recommended to have 100 GiB + of available disk space.
 
-Data Analytics as a Service (DAaaS) spatial data infrastructure Proof of Concept (PoC)  that utilizes PostgreSQL/PostGIS backed geospatial services using GeoServer.
+## Initial Setup
 
-## Before you begin...
+Update the OS and install the prerequisite packages.
 
-### Prerequisites
-* PostgreSQL/PostGIS database
-* postgresql-client
-* shp2pgsql
-* wget
-* unzip
-* tree (optional)
-* Docker (optional)
-
-Export the required environment variables to execute the shell scripts.
-
-```sh
-$ export DB_HOST={YOUR_HOST}
-$ export PORT={YOUR_PG_PORT}
-$ export DB_NAME={YOUR_DB_NAME}
-$ export USER={YOUR_PG_USER_NAME}
-$ export PGPASSWORD={YOUR_PG_PASSWD}
+**Ubuntu**
+```bash
+$ sudo apt update
+$ sudo apt -y upgrade
+$ sudo apt -y install git unzip wget
 ```
 
-## Data Download
+### PostgreSQL and PostGIS
 
-The data being used for this proof of concept uses the [2016 Statistics Canada Geography Boundary Files](ttps://www12.statcan.gc.ca/census-recensement/2011/geo/bound-limit/bound-limit-2016-eng.cfm) and the [National Road Network](https://open.canada.ca/data/en/dataset/3d282116-e556-400c-9306-ca1a3cada77f).
+Add the Postgresql repository.
 
-Navigate to the `scripts` directory.
-
-```sh
-$ cd scripts
+**Ubuntu**
+```bash
+$ wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+$ echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" |sudo tee  /etc/apt/sources.list.d/pgdg.list
 ```
 
-Run the data download script.
+Install PostgreSQL and PostGIS.
 
-```sh
-$ sh dl-data.sh
+```bash
+$ sudo apt update
+$ sudo apt -y install postgresql-12 postgresql-client-12
+$ sudo apt install postgis postgresql-12-postgis-3
 ```
 
-The `data` directory should now contain the 2016 Statistics Canada Geography boundary files in the Esri Shapefile (.shp) data format.
+You should now have the ```psql``` and ```shp2pgsql``` command line interfaces available.
+```bash
+$ psql --help
+$ shp2pgsql --help
+```
+### Docker
 
-```sh
-$ cd ..
-$ tree data
-data
-├── geca000e16a_e
-│   ├── 92-639-g2016001-eng.pdf
-│   ├── agricultural_ecumene.html
-│   ├── agricultural_regions.html
-│   ├── lagecu000e16a_e.CPG
-│   ├── lagecu000e16a_e.dbf
-│   ├── lagecu000e16a_e.prj
-│   ├── lagecu000e16a_e.sbn
-│   ├── lagecu000e16a_e.sbx
-│   ├── lagecu000e16a_e.shp
-│   ├── lagecu000e16a_e.shp.xml
-│   ├── lagecu000e16a_e.shx
-│   ├── lcdagecu000e16a_e.CPG
-│   ├── lcdagecu000e16a_e.dbf
-│   ├── lcdagecu000e16a_e.prj
-│   ├── lcdagecu000e16a_e.sbn
-│   ├── lcdagecu000e16a_e.sbx
-│   ├── lcdagecu000e16a_e.shp
-│   ├── lcdagecu000e16a_e.shp.xml
-│   └── lcdagecu000e16a_e.shx
-├── lada000b16a_e
-│   ├── 92-160-g2016002-eng.pdf
-│   ├── aggregate_dissemination_area.html
-│   ├── lada000b16a_e.dbf
-│   ├── lada000b16a_e.prj
-│   ├── lada000b16a_e.shp
-│   └── lada000b16a_e.shx
-.........
-.........
-.........
+Install the prerequisite packages.
+
+**Ubuntu**
+```bash
+$ sudo apt update
+$ sudo apt install apt-transport-https ca-certificates curl software-properties-common
 ```
 
-## Data Import
+Add the Docker repository.
 
-Next, import the Esri Shapefiles in the data directory into the PostgreSQL/PostGIS instance using the exported environment variables from above.
+```bash
+$ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+$ sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
+$ sudo apt update
+```
 
-```sh
-$ sh import.sh
+Install Docker.
+
+```bash
+$ sudo apt install docker-ce
+```
+
+Check to see if Docker is running.
+
+```bash
+$ sudo systemctl status docker
+```
+
+Add your user to the Docker group. Log out, then back in to take effect.
+
+```bash
+$ sudo usermod -aG docker ${USER}
+$ exit
+```
+
+## Configure Credentials
+
+Copy the credentials template script as ```credentials.sh``` and fill out the appropriate environment variables. ```credentials.sh.template``` outlines an example file.
+```bash
+$ cp credentials.sh.template credentials.sh
 ```
 
 ## Build GeoServer
 
-Build the Docker image.
-```sh
-$ git clone https://github.com/kartoza/docker-geoserver
-$ cd docker-geoserver
-$ git checkout 2.19.0
-$ docker build -t stc/daaas-geoserver .
+Build the GeoServer instance. This GeoServer Dockerfile was forked from [Kartoza](https://github.com/kartoza/docker-geoserver).
+```bash
+$ sudo chmod +x ./build.sh
+$ ./main.sh build_geoserver
 ```
 
-Run the Docker container.
-```sh
-$ docker run --name=daaas_geoserver -dtp 8080:8080 stc/daaas-geoserver
+GeoServer should now be running at ```http://localhost:8085/geoserver/web/```.
+```bash
+$ curl http://localhost:8085/geoserver/web/
 ```
 
-GeoServer should now be running at `http://{YOUR_HOST}:8080/geoserver/web`.
+## Build Elasticsearch
 
-To enter the Docker container if necessary.
-```sh
-$ docker exec -it {NAME} /bin/bash
+Build the Elasticsearch instance required for the GeoNetwork catalog.
+```bash
+$ ./main.sh build_elasticsearch
 ```
 
-Create GeoServer `systemd .service` file.
-```sh
-$ sudo nano /etc/systemd/system/daaas_geoserver.service
+Elasticsearch should now be running at ```http://localhost:9200/```.
+```bash
+$ curl http://localhost:9200
 ```
 
-```
-[Unit] 
-Description=GeoServer container 
-Requires=docker.service 
-After=docker.service 
+## Build GeoNetwork
 
-[Service] 
-Restart=always 
-ExecStart=/usr/bin/docker start -a daaas_geoserver
-ExecStop=/usr/bin/docker stop -t 2 daaas_geoserver
-
-[Install]
-WantedBy=default.target
+Build the GeoNetwork instance.
+```bash
+$ ./main.sh build_geonetwork
 ```
 
-Enable the GeoServer service file.
-```sh
-$ sudo systemctl enable daaas_geoserver.service
+GeoServer should now be running at ```http://localhost:8080/geonetwork/```.
+```bash
+$ curl http://localhost:8080/geonetwork/srv/eng/catalog.search#/home
 ```
 
-Restart, stop, or start the GeoServer instance, or check the status.
-```sh
-$ sudo systemctl [restart | start | stop | status] daaas_geoserver.service
+## Download Data
+
+Download the geospatial datasets and unzip them in the data directory. The main geospatial data that will be downloaded include; Statistics Canada geographic boundaries, National Road Network, Natural Resource Canada place names and Natural Earth foreign land boundaries.
+```bash
+$ ./main.sh download_data
 ```
 
+## Database Creation
+
+Create the PostgreSQL databases if they do not already exist.
+```bash
+$ ./main.sh create_database
+```
+
+Drop the PostgreSQL databases if necessary.
+```bash
+$ ./main.sh drop_database
+```
+
+Enable the PostGIS extension on the newly created databases.
+```bash
+$ ./main.sh enable_postgis
+```
+
+## Import Data
+
+Import the geospatial datasets in your data directory into your
+```bash
+$ ./main.sh import_data
+```
