@@ -3,7 +3,7 @@
 source credentials.sh
 STEP=$1
 
-# Check for at least one parameter
+# Check for at least one parameter.
 if [[ $# -eq 0 ]]; then
     echo "Must pass at least one parameter. Valid parameters include:"
     echo ""
@@ -59,12 +59,12 @@ if [[ ${STEP} = "download_data" ]]; then
     bash scripts/download-data.sh
 fi
 
-# Create the sdi, natearth and nrn databases.
+# Create the SDI, NATEARTH and NRN databases.
 if [[ ${STEP} = "create_database" ]]; then
     bash scripts/create-database.sh
 fi
 
-# Drop the sdi, natearth and nrn databases.
+# Drop the SDI, NATEARTH and NRN databases.
 if [[ ${STEP} = "drop_database" ]]; then
     bash scripts/drop-database.sh
 fi
