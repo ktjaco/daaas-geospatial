@@ -28,7 +28,7 @@ Install PostgreSQL and PostGIS.
 ```bash
 $ sudo apt update
 $ sudo apt -y install postgresql-12 postgresql-client-12
-$ sudo apt install postgis postgresql-12-postgis-3
+$ sudo apt -y install postgis postgresql-12-postgis-3
 ```
 
 You should now have the ```psql``` and ```shp2pgsql``` command line interfaces available.
@@ -84,7 +84,6 @@ $ cp credentials.sh.template credentials.sh
 
 Build the GeoServer instance. This GeoServer Dockerfile was forked from [Kartoza](https://github.com/kartoza/docker-geoserver).
 ```bash
-$ sudo chmod +x ./main.sh
 $ ./main.sh build_geoserver
 ```
 
