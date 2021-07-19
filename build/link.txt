@@ -37,3 +37,14 @@ https://geo.statcan.gc.ca/nrn_rrn/bc/nrn_rrn_bc_SHAPE.zip
 https://geo.statcan.gc.ca/nrn_rrn/sk/nrn_rrn_sk_SHAPE.zip
 https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_1_states_provinces_lines.zip
 https://www.naturalearthdata.com/http//www.naturalearthdata.com/download/10m/cultural/ne_10m_admin_0_countries.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/ab/nrwn_rfn_ab_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/bc/nrwn_rfn_bc_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/mb/nrwn_rfn_mb_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/nb/nrwn_rfn_nb_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/nl/nrwn_rfn_nl_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/ns/nrwn_rfn_ns_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/nt/nrwn_rfn_nt_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/on/nrwn_rfn_on_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/qc/nrwn_rfn_qc_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/sk/nrwn_rfn_sk_shp_en.zip
+http://ftp.maps.canada.ca/pub/nrcan_rncan/vector/geobase_nrwn_rfn/yt/nrwn_rfn_yt_shp_en.zip
