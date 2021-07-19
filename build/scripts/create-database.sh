@@ -26,3 +26,11 @@ psql \
     --port=$PG_PORT \
     --dbname='postgres' \
     -c "CREATE DATABASE $PG_NAT_DB;"
+
+# Create the NRWN database.
+psql \
+    --host=$PG_HOST \
+    --username=$PG_USERNAME \
+    --port=$PG_PORT \
+    --dbname='postgres' \
+    -c "CREATE DATABASE $PG_NRWN_DB;"

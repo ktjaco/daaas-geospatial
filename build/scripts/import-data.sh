@@ -40,6 +40,13 @@ do shp2pgsql -W latin1 -s 3347 -g geom -I -D $shp `basename $shp .shp` | \
 psql --host=$PG_HOST --port=$PG_PORT --username=$PG_USERNAME --dbname=$PG_NRN_DB
 done
 
+# Import National Railway Network files into PostGIS.
+
+for shp in `ls -1 $DATA_DIR/nrwn*/*.shp`;
+do shp2pgsql -W latin1 -s 3347 -g geom -I -D $shp `basename $shp .shp` | \
+psql --host=$PG_HOST --port=$PG_PORT --username=$PG_USERNAME --dbname=$PG_NRWN_DB
+done
+
 # Import Natural Earth files into PostGIS.
 for shp in `ls -1 $DATA_DIR/ne*/*.shp`;
 do shp2pgsql -W latin1 -s 3347 -g geom -I -D $shp `basename $shp .shp` | \

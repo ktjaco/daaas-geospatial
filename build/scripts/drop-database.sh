@@ -26,3 +26,11 @@ psql \
     --port=$PG_PORT \
     --dbname='postgres' \
     -c "DROP DATABASE $PG_NAT_DB;"
+
+# Drop the NRWN database.
+psql \
+    --host=$PG_HOST \
+    --username=$PG_USERNAME \
+    --port=$PG_PORT \
+    --dbname='postgres' \
+    -c "DROP DATABASE $PG_NRWN_DB;"

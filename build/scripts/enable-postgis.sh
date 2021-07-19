@@ -26,3 +26,11 @@ psql \
     --port=$PG_PORT \
     --dbname=$PG_NAT_DB \
     -c "CREATE EXTENSION postgis;"
+
+# Create the PostGIS extension for NRWN.
+psql \
+    --host=$PG_HOST \
+    --username=$PG_USERNAME \
+    --port=$PG_PORT \
+    --dbname=$PG_NRWN_DB \
+    -c "CREATE EXTENSION postgis;"
